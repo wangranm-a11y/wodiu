@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 720" width="430" height="720">
+  <defs>
+    <radialGradient id="bg1" cx="50%" cy="35%" r="80%">
+      <stop offset="0%" stop-color="#1c1838"/>
+      <stop offset="100%" stop-color="#0a0820"/>
+    </radialGradient>
+    <radialGradient id="aura1" cx="50%" cy="55%" r="55%">
+      <stop offset="0%" stop-color="#cdd0ff" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#a8b0ff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#a8b0ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="430" height="720" fill="url(#bg1)" rx="40"/>
+
+  <!-- 散落星点 -->
+  <g opacity="0.85">
+    <circle cx="50" cy="80" r="1.4" fill="#fff"/>
+    <circle cx="120" cy="160" r="1" fill="#fff" opacity="0.7"/>
+    <circle cx="280" cy="100" r="1.6" fill="#fff"/>
+    <circle cx="380" cy="200" r="1.2" fill="#fff"/>
+    <circle cx="80" cy="400" r="1" fill="#fff" opacity="0.6"/>
+    <circle cx="350" cy="450" r="1" fill="#fff" opacity="0.7"/>
+    <path d="M380 80 L382 84 L386 86 L382 88 L380 92 L378 88 L374 86 L378 84 Z" fill="#ff8a9c" opacity="0.85"/>
+  </g>
+
+  <!-- 顶栏 brand line -->
+  <g transform="translate(24, 24)">
+    <circle cx="6" cy="14" r="5" fill="#ff8a9c"/>
+    <text x="20" y="20" font-family="-apple-system,'PingFang SC',sans-serif" font-size="16" font-weight="700" fill="#f4f0e8" letter-spacing="2">我丢</text>
+    <text x="62" y="19" font-family="'JetBrains Mono',monospace" font-size="10" fill="#a8a098" letter-spacing="1">v7</text>
+    <text x="320" y="19" font-family="'JetBrains Mono',monospace" font-size="11" fill="#f4f0e8" letter-spacing="1">15:23:42</text>
+    <line x1="0" y1="34" x2="382" y2="34" stroke="#fff" stroke-opacity="0.06"/>
+  </g>
+
+  <!-- Hero stage：圆滚滚的丢丢 -->
+  <g transform="translate(105, 130)">
+    <ellipse cx="110" cy="130" rx="170" ry="140" fill="url(#aura1)"/>
+    <!-- Tail -->
+    <path d="M180 150 Q200 156 204 140 Q208 122 192 118"
+          stroke="#a8b0ff" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.78"/>
+    <!-- Ears -->
+    <path d="M58 70 Q50 36 90 44 Q86 60 84 74 Z" fill="#a8b0ff" opacity="0.85"/>
+    <path d="M68 56 Q70 64 74 70" stroke="#ff9aaa" stroke-width="3" stroke-linecap="round" opacity="0.55" fill="none"/>
+    <path d="M162 70 Q170 36 130 44 Q134 60 136 74 Z" fill="#a8b0ff" opacity="0.85"/>
+    <path d="M152 56 Q150 64 146 70" stroke="#ff9aaa" stroke-width="3" stroke-linecap="round" opacity="0.55" fill="none"/>
+    <!-- Body -->
+    <path d="
+      M38 120 Q38 70 110 70 Q182 70 182 120
+      Q182 172 178 188 Q170 198 158 188 Q142 198 126 188
+      Q110 198 94 188 Q78 198 62 188 Q50 198 42 188
+      Q38 172 38 120 Z"
+      fill="#a8b0ff" opacity="0.58" stroke="#a8b0ff" stroke-width="1.5"/>
+    <!-- Paws -->
+    <ellipse cx="86" cy="182" rx="6" ry="4" fill="#a8b0ff" opacity="0.85" stroke="#a8b0ff" stroke-width="1.2"/>
+    <ellipse cx="134" cy="182" rx="6" ry="4" fill="#a8b0ff" opacity="0.85" stroke="#a8b0ff" stroke-width="1.2"/>
+    <!-- Blush -->
+    <ellipse cx="60" cy="130" rx="8" ry="4.5" fill="#ff9aaa" opacity="0.55"/>
+    <ellipse cx="160" cy="130" rx="8" ry="4.5" fill="#ff9aaa" opacity="0.55"/>
+    <!-- Eyes -->
+    <ellipse cx="80" cy="112" rx="13" ry="14.5" fill="#1a1830"/>
+    <ellipse cx="140" cy="112" rx="13" ry="14.5" fill="#1a1830"/>
+    <ellipse cx="83" cy="106" rx="4.8" ry="5.8" fill="#fff"/>
+    <ellipse cx="143" cy="106" rx="4.8" ry="5.8" fill="#fff"/>
+    <circle cx="76" cy="116" r="2.2" fill="#fff" opacity="0.8"/>
+    <circle cx="136" cy="116" r="2.2" fill="#fff" opacity="0.8"/>
+    <!-- Nose -->
+    <ellipse cx="110" cy="128" rx="2.5" ry="1.5" fill="#1a1830" opacity="0.45"/>
+    <!-- Mouth (small w) -->
+    <path d="M102 138 Q106 142 110 138 Q114 142 118 138" stroke="#1a1830" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Bubble -->
+  <g transform="translate(118, 422)">
+    <rect x="0" y="0" width="194" height="36" rx="18" fill="#fff" fill-opacity="0.075" stroke="#fff" stroke-opacity="0.10"/>
+    <text x="97" y="23" font-family="'LXGW WenKai Screen','Songti SC',serif" font-style="italic" font-size="13" fill="#f4f0e8" text-anchor="middle">今天又丢什么了？</text>
+  </g>
+
+  <!-- Functional buttons -->
+  <g transform="translate(28, 488)">
+    <rect x="0" y="0" width="374" height="68" rx="14" fill="#ff8a9c"/>
+    <circle cx="40" cy="34" r="18" fill="#1a1830" fill-opacity="0.20"/>
+    <text x="40" y="40" font-family="-apple-system,sans-serif" font-size="22" font-weight="700" fill="#1a1830" text-anchor="middle">·</text>
+    <text x="74" y="34" font-family="-apple-system,'PingFang SC',sans-serif" font-size="17" font-weight="700" fill="#1a1830" letter-spacing="1">今天丢了什么？</text>
+    <text x="74" y="52" font-family="'LXGW WenKai Screen','Songti SC',serif" font-size="12" fill="#1a1830" fill-opacity="0.65">把它交给我</text>
+  </g>
+  <g transform="translate(28, 568)">
+    <rect x="0" y="0" width="374" height="68" rx="14" fill="#fff" fill-opacity="0.04" stroke="#fff" stroke-opacity="0.10"/>
+    <circle cx="40" cy="34" r="18" fill="#ff8a9c" fill-opacity="0.18"/>
+    <text x="40" y="40" font-family="-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ff8a9c" text-anchor="middle">·</text>
+    <text x="74" y="34" font-family="-apple-system,'PingFang SC',sans-serif" font-size="17" font-weight="700" fill="#f4f0e8" letter-spacing="1">先记着，怕忘</text>
+    <text x="74" y="52" font-family="'LXGW WenKai Screen','Songti SC',serif" font-size="12" fill="#a8a098">还没丢，但容易忘</text>
+  </g>
+
+  <!-- Bottom tabs -->
+  <g transform="translate(0, 658)">
+    <rect x="0" y="0" width="430" height="62" fill="#0a0820" fill-opacity="0.85" stroke="#fff" stroke-opacity="0.06"/>
+    <line x1="40" y1="0" x2="68" y2="0" stroke="#ff8a9c" stroke-width="2"/>
+    <text x="54" y="26" font-family="-apple-system,sans-serif" font-size="18" fill="#ff8a9c" text-anchor="middle">✦</text>
+    <text x="54" y="46" font-family="-apple-system,'PingFang SC',sans-serif" font-size="10" font-weight="500" fill="#f4f0e8" text-anchor="middle">丢了</text>
+    <text x="161" y="26" font-family="-apple-system,sans-serif" font-size="18" fill="#a8a098" text-anchor="middle">◐</text>
+    <text x="161" y="46" font-family="-apple-system,'PingFang SC',sans-serif" font-size="10" font-weight="500" fill="#a8a098" text-anchor="middle">还在</text>
+    <text x="269" y="26" font-family="-apple-system,sans-serif" font-size="18" fill="#a8a098" text-anchor="middle">✧</text>
+    <text x="269" y="46" font-family="-apple-system,'PingFang SC',sans-serif" font-size="10" font-weight="500" fill="#a8a098" text-anchor="middle">星图</text>
+    <text x="376" y="26" font-family="-apple-system,sans-serif" font-size="18" fill="#a8a098" text-anchor="middle">◯</text>
+    <text x="376" y="46" font-family="-apple-system,'PingFang SC',sans-serif" font-size="10" font-weight="500" fill="#a8a098" text-anchor="middle">自己</text>
+  </g>
+</svg>

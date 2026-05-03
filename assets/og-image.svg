@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#1c1838"/>
+      <stop offset="60%" stop-color="#14112e"/>
+      <stop offset="100%" stop-color="#0a0820"/>
+    </radialGradient>
+    <radialGradient id="aura" cx="50%" cy="55%" r="55%">
+      <stop offset="0%" stop-color="#cdd0ff" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#a8b0ff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#a8b0ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="warmGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff8a9c" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#ff8a9c" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Stars -->
+  <g opacity="0.85">
+    <circle cx="80" cy="60" r="1.6" fill="#fff"/>
+    <circle cx="220" cy="120" r="1" fill="#fff" opacity="0.7"/>
+    <circle cx="350" cy="50" r="1.4" fill="#fff"/>
+    <circle cx="540" cy="90" r="1" fill="#fff" opacity="0.6"/>
+    <circle cx="780" cy="110" r="1.2" fill="#fff" opacity="0.8"/>
+    <circle cx="960" cy="60" r="1.6" fill="#fff"/>
+    <circle cx="1140" cy="180" r="1" fill="#fff" opacity="0.6"/>
+    <circle cx="120" cy="540" r="1.2" fill="#fff" opacity="0.7"/>
+    <circle cx="980" cy="500" r="1.4" fill="#fff"/>
+    <circle cx="1100" cy="580" r="1" fill="#fff" opacity="0.6"/>
+    <circle cx="60" cy="480" r="1" fill="#fff" opacity="0.55"/>
+    <!-- Bright accent stars -->
+    <path d="M180 40 L182 44 L186 46 L182 48 L180 52 L178 48 L174 46 L178 44 Z" fill="#ff8a9c" opacity="0.9"/>
+    <path d="M1080 80 L1082 84 L1086 86 L1082 88 L1080 92 L1078 88 L1074 86 L1078 84 Z" fill="#ff8a9c" opacity="0.7"/>
+  </g>
+
+  <!-- 暖光晕 -->
+  <ellipse cx="900" cy="320" rx="280" ry="240" fill="url(#warmGlow)"/>
+
+  <!-- Mascot — 大版萌幽灵猫 -->
+  <g transform="translate(820, 200)">
+    <!-- Aura -->
+    <ellipse cx="100" cy="115" rx="170" ry="150" fill="url(#aura)"/>
+    <!-- Tail -->
+    <path d="M156 132 Q176 138 180 122 Q184 104 168 100"
+          stroke="#a8b0ff" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.78"
+          transform="scale(1.5) translate(-30, -30)"/>
+    <!-- Ears -->
+    <g transform="scale(1.5) translate(-30, -30)">
+      <path d="M48 60 Q40 30 76 38 Q72 50 70 64 Z" fill="#a8b0ff" opacity="0.85"/>
+      <path d="M58 50 Q60 56 64 60" stroke="#ff9aaa" stroke-width="3" stroke-linecap="round" opacity="0.55" fill="none"/>
+      <path d="M152 60 Q160 30 124 38 Q128 50 130 64 Z" fill="#a8b0ff" opacity="0.85"/>
+      <path d="M142 50 Q140 56 136 60" stroke="#ff9aaa" stroke-width="3" stroke-linecap="round" opacity="0.55" fill="none"/>
+    </g>
+    <!-- Body (chibi) -->
+    <g transform="scale(1.5) translate(-30, -30)">
+      <path d="
+        M28 110 Q28 60 100 60 Q172 60 172 110
+        Q172 162 168 178 Q160 188 148 178 Q132 188 116 178
+        Q100 188 84 178 Q68 188 52 178 Q40 188 32 178
+        Q28 162 28 110 Z"
+        fill="#a8b0ff" opacity="0.58" stroke="#a8b0ff" stroke-width="1.5"/>
+      <!-- Paws -->
+      <ellipse cx="76" cy="172" rx="6" ry="4" fill="#a8b0ff" opacity="0.85" stroke="#a8b0ff" stroke-width="1.2"/>
+      <ellipse cx="124" cy="172" rx="6" ry="4" fill="#a8b0ff" opacity="0.85" stroke="#a8b0ff" stroke-width="1.2"/>
+    </g>
+    <!-- Blush -->
+    <ellipse cx="50" cy="150" rx="14" ry="7" fill="#ff9aaa" opacity="0.55"/>
+    <ellipse cx="250" cy="150" rx="14" ry="7" fill="#ff9aaa" opacity="0.55"/>
+    <!-- Eyes (BIG kawaii) -->
+    <ellipse cx="105" cy="125" rx="22" ry="25" fill="#1a1830"/>
+    <ellipse cx="195" cy="125" rx="22" ry="25" fill="#1a1830"/>
+    <ellipse cx="110" cy="115" rx="8" ry="10" fill="#fff"/>
+    <ellipse cx="200" cy="115" rx="8" ry="10" fill="#fff"/>
+    <circle cx="98" cy="132" r="4" fill="#fff" opacity="0.8"/>
+    <circle cx="188" cy="132" r="4" fill="#fff" opacity="0.8"/>
+    <!-- Nose -->
+    <ellipse cx="150" cy="158" rx="4" ry="2.5" fill="#1a1830" opacity="0.50"/>
+    <!-- Tiny smile -->
+    <path d="M138 175 Q144 180 150 175 Q156 180 162 175"
+          stroke="#1a1830" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Brand block (left) -->
+  <g transform="translate(80, 140)">
+    <!-- Brand dot -->
+    <circle cx="14" cy="50" r="14" fill="#ff8a9c"/>
+    <circle cx="14" cy="50" r="14" fill="none" stroke="#ff8a9c" stroke-width="1" opacity="0.4">
+      <animate attributeName="r" values="14;22;14" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Brand 我丢 -->
+    <text x="44" y="72" font-family="-apple-system, 'PingFang SC', sans-serif"
+          font-size="86" font-weight="800" fill="#f4f0e8" letter-spacing="6">我 丢</text>
+
+    <!-- Tagline -->
+    <text x="0" y="150" font-family="'Songti SC', 'Noto Serif SC', serif"
+          font-size="40" font-style="italic" font-weight="500" fill="#f4f0e8" opacity="0.95">
+      把脑子里悬着的那件事，
+    </text>
+    <text x="0" y="200" font-family="'Songti SC', 'Noto Serif SC', serif"
+          font-size="40" font-style="italic" font-weight="500" fill="#f4f0e8" opacity="0.95">
+      交给它管着。
+    </text>
+
+    <!-- Sub tagline -->
+    <text x="0" y="270" font-family="'LXGW WenKai Screen', 'Songti SC', serif"
+          font-size="22" fill="#a8a08a">
+      丢三落四的人，也配有一只只属于自己的星图。
+    </text>
+
+    <!-- Pill: PWA -->
+    <g transform="translate(0, 320)">
+      <rect x="0" y="0" width="120" height="36" rx="18" fill="#ff8a9c"/>
+      <text x="60" y="24" font-family="'JetBrains Mono', monospace" font-size="14"
+            font-weight="700" fill="#1a1830" text-anchor="middle" letter-spacing="2">PWA · v7</text>
+    </g>
+    <g transform="translate(132, 320)">
+      <rect x="0" y="0" width="180" height="36" rx="18" fill="none" stroke="#a8b0ff" stroke-width="1.5"/>
+      <text x="90" y="24" font-family="'JetBrains Mono', monospace" font-size="13"
+            font-weight="600" fill="#a8b0ff" text-anchor="middle" letter-spacing="2">暗夜柔糖</text>
+    </g>
+    <g transform="translate(324, 320)">
+      <rect x="0" y="0" width="172" height="36" rx="18" fill="none" stroke="#a8b0ff" stroke-width="1.5" opacity="0.7"/>
+      <text x="86" y="24" font-family="'JetBrains Mono', monospace" font-size="13"
+            font-weight="600" fill="#a8b0ff" text-anchor="middle" letter-spacing="2" opacity="0.85">丢丢 · 主视觉</text>
+    </g>
+  </g>
+
+  <!-- URL bottom-left -->
+  <text x="80" y="560" font-family="'JetBrains Mono', monospace" font-size="14"
+        fill="#a8a08a" letter-spacing="2">wangranm-a11y.github.io/wodiu</text>
+
+  <!-- Decorative lines -->
+  <line x1="80" y1="100" x2="180" y2="100" stroke="#ff8a9c" stroke-width="2"/>
+  <line x1="190" y1="100" x2="280" y2="100" stroke="#a8b0ff" stroke-width="2" opacity="0.6"/>
+  <line x1="290" y1="100" x2="340" y2="100" stroke="#a8b0ff" stroke-width="2" opacity="0.3"/>
+</svg>

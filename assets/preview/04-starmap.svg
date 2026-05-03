@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 720" width="430" height="720">
+  <defs>
+    <radialGradient id="bg4" cx="50%" cy="35%" r="80%">
+      <stop offset="0%" stop-color="#1c1838"/>
+      <stop offset="100%" stop-color="#0a0820"/>
+    </radialGradient>
+    <radialGradient id="frameInner" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#1c1838"/>
+      <stop offset="100%" stop-color="#0a0820"/>
+    </radialGradient>
+    <radialGradient id="starPurple" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a8b0ff" stop-opacity="0.50"/>
+      <stop offset="100%" stop-color="#a8b0ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="starGold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff8a9c" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ff8a9c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="starGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5fd9b0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#5fd9b0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="starYellow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffde50" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#ffde50" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="diuAura" cx="50%" cy="55%" r="55%">
+      <stop offset="0%" stop-color="#cdd0ff" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#a8b0ff" stop-opacity="0.50"/>
+      <stop offset="100%" stop-color="#a8b0ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="430" height="720" fill="url(#bg4)" rx="40"/>
+
+  <!-- Top bar -->
+  <g transform="translate(24, 24)">
+    <circle cx="6" cy="14" r="5" fill="#ff8a9c"/>
+    <text x="20" y="20" font-family="-apple-system,'PingFang SC',sans-serif" font-size="16" font-weight="700" fill="#f4f0e8" letter-spacing="2">我丢</text>
+    <text x="320" y="19" font-family="'JetBrains Mono',monospace" font-size="11" fill="#f4f0e8" letter-spacing="1">15:25:33</text>
+    <line x1="0" y1="34" x2="382" y2="34" stroke="#fff" stroke-opacity="0.06"/>
+  </g>
+
+  <!-- 标题 -->
+  <g transform="translate(28, 92)">
+    <text x="0" y="32" font-family="-apple-system,'PingFang SC',sans-serif" font-size="32" font-weight="700" fill="#f4f0e8" letter-spacing="0.02em">星图</text>
+    <text x="0" y="58" font-family="'LXGW WenKai Screen','Songti SC',serif" font-style="italic" font-size="13" fill="#a8a098">这些都是你有过的东西，它们都好好的。</text>
+  </g>
+
+  <!-- 视图切换 -->
+  <g transform="translate(28, 168)">
+    <rect x="0" y="0" width="142" height="28" rx="14" fill="#fff" fill-opacity="0.045" stroke="#fff" stroke-opacity="0.10"/>
+    <rect x="3" y="3" width="68" height="22" rx="11" fill="#ff8a9c"/>
+    <text x="37" y="19" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="600" fill="#1a1830" text-anchor="middle" letter-spacing="1">✦ 星空</text>
+    <text x="105" y="19" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="500" fill="#a8a098" text-anchor="middle" letter-spacing="1">≡ 时间轴</text>
+  </g>
+
+  <!-- 筛选 chips -->
+  <g transform="translate(28, 208)">
+    <rect x="0" y="0" width="40" height="22" rx="11" fill="#ff8a9c"/>
+    <text x="20" y="15" font-family="-apple-system,'PingFang SC',sans-serif" font-size="11" font-weight="500" fill="#1a1830" text-anchor="middle">全部</text>
+
+    <rect x="48" y="0" width="40" height="22" rx="11" fill="transparent" stroke="#fff" stroke-opacity="0.10"/>
+    <text x="68" y="15" font-family="-apple-system,'PingFang SC',sans-serif" font-size="11" fill="#a8a098" text-anchor="middle">找到</text>
+
+    <rect x="96" y="0" width="40" height="22" rx="11" fill="transparent" stroke="#fff" stroke-opacity="0.10"/>
+    <text x="116" y="15" font-family="-apple-system,'PingFang SC',sans-serif" font-size="11" fill="#a8a098" text-anchor="middle">翻篇</text>
+
+    <rect x="144" y="0" width="40" height="22" rx="11" fill="transparent" stroke="#fff" stroke-opacity="0.10"/>
+    <text x="164" y="15" font-family="-apple-system,'PingFang SC',sans-serif" font-size="11" fill="#a8a098" text-anchor="middle">封存</text>
+
+    <rect x="192" y="0" width="56" height="22" rx="11" fill="transparent" stroke="#fff" stroke-opacity="0.10"/>
+    <text x="220" y="15" font-family="-apple-system,'PingFang SC',sans-serif" font-size="11" fill="#a8a098" text-anchor="middle">已上香</text>
+
+    <text x="374" y="15" font-family="'JetBrains Mono',monospace" font-size="10" fill="#a8a098" text-anchor="end" letter-spacing="1">12 颗</text>
+  </g>
+
+  <!-- 星图 frame -->
+  <g transform="translate(28, 248)">
+    <rect width="374" height="380" rx="16" fill="url(#frameInner)" stroke="#fff" stroke-opacity="0.10"/>
+
+    <!-- 散落细星点 -->
+    <g opacity="0.6">
+      <circle cx="60" cy="40" r="1.4" fill="#fff"/>
+      <circle cx="180" cy="100" r="1" fill="#fff" opacity="0.7"/>
+      <circle cx="320" cy="50" r="1.4" fill="#fff"/>
+      <circle cx="280" cy="200" r="1.2" fill="#fff" opacity="0.7"/>
+      <circle cx="80" cy="280" r="1" fill="#fff" opacity="0.6"/>
+      <circle cx="350" cy="320" r="1.2" fill="#fff" opacity="0.7"/>
+      <circle cx="40" cy="180" r="1" fill="#fff" opacity="0.5"/>
+    </g>
+
+    <!-- Stars (records) -->
+    <!-- Released (purple) -->
+    <g transform="translate(70, 90)">
+      <ellipse cx="0" cy="0" rx="36" ry="36" fill="url(#starPurple)"/>
+      <!-- 充电宝 icon -->
+      <rect x="-12" y="-15" width="24" height="28" rx="5" fill="#a8b0ff" opacity="0.85"/>
+      <rect x="-7" y="-19" width="14" height="5" rx="2" fill="#7d86d6"/>
+      <path d="M-3 -7 L7 -7 L0 1 L8 1 L-6 13 L-2 5 L-9 5 Z" fill="#fff8b8"/>
+    </g>
+    <!-- Healed (gold) -->
+    <g transform="translate(180, 130)">
+      <ellipse cx="0" cy="0" rx="42" ry="42" fill="url(#starGold)"/>
+      <!-- book -->
+      <rect x="-14" y="-15" width="28" height="22" rx="2" fill="#a8b0ff" opacity="0.85"/>
+      <rect x="-14" y="-15" width="5" height="22" fill="#7d86d6"/>
+      <line x1="-7" y1="-9" x2="11" y2="-9" stroke="#fff" stroke-width="1" opacity="0.6"/>
+      <line x1="-7" y1="-3" x2="11" y2="-3" stroke="#fff" stroke-width="1" opacity="0.6"/>
+    </g>
+    <!-- Found (green) -->
+    <g transform="translate(290, 100)">
+      <ellipse cx="0" cy="0" rx="34" ry="34" fill="url(#starGreen)"/>
+      <!-- key -->
+      <circle cx="-7" cy="0" r="9" fill="none" stroke="#a8b0ff" stroke-width="3"/>
+      <circle cx="-7" cy="0" r="2.5" fill="#a8b0ff"/>
+      <line x1="2" y1="0" x2="14" y2="0" stroke="#a8b0ff" stroke-width="3" stroke-linecap="round"/>
+      <line x1="10" y1="0" x2="10" y2="5" stroke="#a8b0ff" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <!-- Incensed (gold) -->
+    <g transform="translate(120, 220)">
+      <ellipse cx="0" cy="0" rx="38" ry="38" fill="url(#starGold)"/>
+      <!-- umbrella -->
+      <path d="M-15 -2 Q0 -16 15 -2 L0 -2 Z" fill="#a8b0ff"/>
+      <line x1="0" y1="-2" x2="0" y2="11" stroke="#a8b0ff" stroke-width="3"/>
+      <path d="M0 11 Q3 14 7 12" stroke="#a8b0ff" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </g>
+    <!-- Found (green) -->
+    <g transform="translate(250, 250)">
+      <ellipse cx="0" cy="0" rx="32" ry="32" fill="url(#starGreen)"/>
+      <!-- earphone -->
+      <path d="M-12 -2 Q-12 -10 0 -10 Q12 -10 12 -2" stroke="#a8b0ff" stroke-width="3" fill="none"/>
+      <rect x="-13" y="-2" width="6" height="11" rx="3" fill="#a8b0ff"/>
+      <rect x="7" y="-2" width="6" height="11" rx="3" fill="#a8b0ff"/>
+    </g>
+    <!-- Released (purple) -->
+    <g transform="translate(330, 220)">
+      <ellipse cx="0" cy="0" rx="30" ry="30" fill="url(#starPurple)"/>
+      <!-- phone -->
+      <rect x="-7" y="-12" width="14" height="22" rx="3" fill="#a8b0ff" opacity="0.85"/>
+      <rect x="-6" y="-9" width="12" height="16" rx="1" fill="#1a1830" opacity="0.4"/>
+    </g>
+    <!-- More -->
+    <g transform="translate(80, 280)">
+      <ellipse cx="0" cy="0" rx="28" ry="28" fill="url(#starYellow)"/>
+      <text x="0" y="6" font-size="22" text-anchor="middle">✨</text>
+    </g>
+
+    <!-- Floater diu (corner) -->
+    <g transform="translate(310, 320)">
+      <ellipse cx="22" cy="22" rx="36" ry="32" fill="url(#diuAura)"/>
+      <!-- ears -->
+      <path d="M5 12 Q1 0 17 4 Q15 12 14 18 Z" fill="#a8b0ff" opacity="0.85"/>
+      <path d="M39 12 Q43 0 27 4 Q29 12 30 18 Z" fill="#a8b0ff" opacity="0.85"/>
+      <!-- body -->
+      <path d="M0 30 Q0 18 22 18 Q44 18 44 30 Q44 44 42 50 Q39 53 36 50 Q31 53 26 50 Q22 53 18 50 Q13 53 8 50 Q5 53 2 50 Q0 44 0 30 Z" fill="#a8b0ff" opacity="0.58" stroke="#a8b0ff" stroke-width="1.2"/>
+      <!-- eyes -->
+      <ellipse cx="14" cy="32" rx="3.5" ry="4" fill="#1a1830"/>
+      <ellipse cx="30" cy="32" rx="3.5" ry="4" fill="#1a1830"/>
+      <ellipse cx="15" cy="30.5" rx="1.4" ry="1.6" fill="#fff"/>
+      <ellipse cx="31" cy="30.5" rx="1.4" ry="1.6" fill="#fff"/>
+    </g>
+  </g>
+
+  <!-- 底部 tagline 卡 -->
+  <g transform="translate(28, 644)">
+    <rect x="0" y="0" width="374" height="40" rx="10" fill="#ff8a9c" fill-opacity="0.12" stroke="#fff" stroke-opacity="0.10"/>
+    <text x="187" y="25" font-family="'LXGW WenKai Screen','Songti SC',serif" font-style="italic" font-size="13" fill="#ff8a9c" text-anchor="middle">每一件丢失的物品，都是一颗星星。</text>
+  </g>
+
+  <!-- Tabs -->
+  <g transform="translate(0, 696)">
+    <rect x="0" y="-32" width="430" height="32" fill="#0a0820" fill-opacity="0.85"/>
+    <line x1="269" y1="-32" x2="297" y2="-32" stroke="#ff8a9c" stroke-width="2"/>
+    <text x="54" y="-12" font-family="-apple-system,sans-serif" font-size="13" fill="#a8a098" text-anchor="middle">✦ 丢了</text>
+    <text x="161" y="-12" font-family="-apple-system,sans-serif" font-size="13" fill="#a8a098" text-anchor="middle">◐ 还在</text>
+    <text x="283" y="-12" font-family="-apple-system,sans-serif" font-size="13" fill="#ff8a9c" font-weight="700" text-anchor="middle">✧ 星图</text>
+    <text x="376" y="-12" font-family="-apple-system,sans-serif" font-size="13" fill="#a8a098" text-anchor="middle">◯ 自己</text>
+  </g>
+</svg>
