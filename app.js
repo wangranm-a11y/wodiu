@@ -64,6 +64,22 @@
   }
   applySettings();
 
+  // —— 数据迁移：把旧版 status='incensed' 的记录还原到原始状态 ——
+  // 因为之前的 bug：上香会覆盖 'released'/'healed' 等真实状态
+  // 现在: status 永远是 released/healed/found/searching；上香单独看 incenseSticks
+  (function migrateIncense() {
+    let changed = false;
+    db.lost.forEach(r => {
+      if (r.status === 'incensed') {
+        // 推断原状态：有信封/故事 → healed；否则 → released
+        r.status = (r.letter || r.storyText || r.epitaph) ? 'healed' : 'released';
+        if (!r.incenseSticks) r.incenseSticks = 1;
+        changed = true;
+      }
+    });
+    if (changed) saveDB();
+  })();
+
   // ============ Toast / Modal ============
   let toastTimer;
   function toast(msg, ms = 2500) {
@@ -464,7 +480,16 @@
     );
     if (yes === 1 && item) {
       IN.open(item, ({ sticks, at }) => {
-        updateLost(item.id, { status: 'incensed', incenseSticks: sticks, incenseAt: at });
+        // 上香不再覆盖原状态。原状态（released/healed/found）保留，
+        // 只追加 incenseSticks 累计 + incenseAt 最近时间 + incenseHistory 历次记录
+        const r = findLost(item.id) || {};
+        const history = Array.isArray(r.incenseHistory) ? r.incenseHistory.slice() : [];
+        history.push({ sticks, at });
+        updateLost(item.id, {
+          incenseSticks: (r.incenseSticks || 0) + sticks,
+          incenseAt: at,
+          incenseHistory: history,
+        });
         switchTab('museum');
       });
     } else if (yes === 1 && !item) {
@@ -672,18 +697,24 @@
     });
     if (n === 2) renderShadowPoem();
     if (n === 5) renderSeal();
+    if (n === 6) renderHealCard();
   }
 
   $$('.heal-next').forEach(b => {
     b.addEventListener('click', () => {
       const cur = lostState.healStep;
-      if (cur === 3) lostState.letter = $('#letterText').value;
-      if (cur < 5) setHealStep(cur + 1);
+      if (cur === 3) {
+        // 收下墓志铭三件套
+        lostState.epitaph = $('#letterText')?.value || '';
+        lostState.lostWhen = $('#lostWhenInput')?.value || '';
+        lostState.lostWhere = $('#lostWhereInput')?.value || '';
+      }
+      if (cur < 6) setHealStep(cur + 1);
     });
   });
   $$('.heal-skip').forEach(b => {
     b.addEventListener('click', () => {
-      if (lostState.healStep < 5) setHealStep(lostState.healStep + 1);
+      if (lostState.healStep < 6) setHealStep(lostState.healStep + 1);
     });
   });
 
@@ -813,7 +844,11 @@
       updateLost(lostState.currentId, {
         status: 'healed',
         photo: lostState.photo,
-        letter: lostState.letter,
+        epitaph: lostState.epitaph || '',  // 墓志铭
+        letter: lostState.epitaph || '',    // 兼容旧字段名
+        lostWhen: lostState.lostWhen || '',
+        lostWhere: lostState.lostWhere || '',
+        sealedAt: now(),
         storyKws: lostState.storyKws,
         storyText: lostState.storyText,
         storyTail: $('#storyTail')?.value || '',
@@ -821,6 +856,39 @@
       });
     }
   }
+
+  // step6: 渲染纪念分享卡
+  async function renderHealCard() {
+    if (!window.HEALCARD) return;
+    HEALCARD.init();
+    const r = lostState.currentId ? findLost(lostState.currentId) : null;
+    await HEALCARD.render({
+      name: r?.name || lostState.name,
+      epitaph: lostState.epitaph || r?.epitaph || '',
+      lostWhen: lostState.lostWhen || r?.lostWhen || '',
+      lostWhere: lostState.lostWhere || r?.lostWhere || '',
+      sealedAt: r?.sealedAt || now(),
+    });
+    SND?.play('chime');
+  }
+
+  $('#healSave')?.addEventListener('click', async () => {
+    SND?.play('drop'); HAP?.light();
+    const ok = await HEALCARD.save(`memorial-${lostState.name || ''}-${Date.now()}.png`);
+    if (ok) { SND?.play('chime'); HAP?.confirm(); toast('已下载到本地。', 2000); }
+  });
+  $('#healShare')?.addEventListener('click', async () => {
+    HAP?.light();
+    const r = await HEALCARD.share(lostState.name);
+    if (r.ok) { SND?.play('chime'); HAP?.confirm(); }
+    else if (r.reason === 'unsupported') {
+      toast('当前浏览器不支持系统分享 · 试试保存图片再发出去', 3000);
+    }
+  });
+  $('#healFinish')?.addEventListener('click', () => {
+    SND?.play('chime'); HAP?.confirm();
+    switchTab('museum');
+  });
 
   function spawnSealParticles() {
     const wrap = $('#heal-flow .seal-particles');
@@ -846,7 +914,16 @@
     const item = findLost(lostState.currentId);
     if (!item) return;
     IN.open(item, ({ sticks, at }) => {
-      updateLost(item.id, { status: 'incensed', incenseSticks: sticks, incenseAt: at });
+      // 上香不再覆盖原状态。原状态（released/healed/found）保留，
+        // 只追加 incenseSticks 累计 + incenseAt 最近时间 + incenseHistory 历次记录
+        const r = findLost(item.id) || {};
+        const history = Array.isArray(r.incenseHistory) ? r.incenseHistory.slice() : [];
+        history.push({ sticks, at });
+        updateLost(item.id, {
+          incenseSticks: (r.incenseSticks || 0) + sticks,
+          incenseAt: at,
+          incenseHistory: history,
+        });
       switchTab('museum');
     });
   });
@@ -1062,7 +1139,7 @@
     if (museumFilter === 'found') items = items.filter(r => r.status === 'found');
     else if (museumFilter === 'released') items = items.filter(r => r.status === 'released');
     else if (museumFilter === 'healed') items = items.filter(r => r.status === 'healed');
-    else if (museumFilter === 'incensed') items = items.filter(r => r.status === 'incensed');
+    else if (museumFilter === 'incensed') items = items.filter(r => (r.incenseSticks || 0) > 0);
 
     // 视图切换显示
     $('#starmapFrame').hidden = museumView !== 'starfield';
@@ -1093,6 +1170,59 @@
       empathy.textContent = C.starmapTagline || '每一件丢失的物品，都是一颗星星。';
       empathy.hidden = false;
     }
+
+    // 上香榜单
+    renderIncenseBoard();
+  }
+
+  // —— 上香榜单：累计柱数排序 ——
+  function renderIncenseBoard() {
+    const board = $('#incenseBoard');
+    const list = $('#incenseBoardList');
+    if (!board || !list) return;
+
+    const incensed = db.lost
+      .filter(r => (r.incenseSticks || 0) > 0)
+      .sort((a, b) => (b.incenseSticks || 0) - (a.incenseSticks || 0)
+                    || (b.incenseAt || 0) - (a.incenseAt || 0));
+
+    if (!incensed.length) {
+      board.hidden = true;
+      return;
+    }
+    board.hidden = false;
+
+    list.innerHTML = incensed.slice(0, 20).map((r, i) => {
+      const rank = i + 1;
+      const rankCls = rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : '';
+      const icon = window.ITEMICON ? window.ITEMICON.svg(r.name) : '✦';
+      const sticks = r.incenseSticks || 0;
+      const lastTs = r.incenseAt ? relTime(r.incenseAt) : '';
+      const times = (r.incenseHistory || []).length || 1;
+      const meta = `上过 ${times} 次 · ${lastTs}`;
+      return `
+        <div class="ib-item" data-id="${r.id}">
+          <div class="ib-rank ${rankCls}">${rank}</div>
+          <div class="ib-icon">${icon}</div>
+          <div class="ib-body">
+            <div class="ib-name">${escapeHTML(r.name)}</div>
+            <div class="ib-meta">${meta}</div>
+          </div>
+          <div class="ib-sticks">
+            <span class="ib-sticks-num">${sticks}</span>
+            <span class="ib-sticks-unit">柱</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // 点击跳到详情
+    list.querySelectorAll('.ib-item').forEach(it => {
+      it.addEventListener('click', () => {
+        SND?.play('pop'); HAP?.light();
+        openMuseumItem(it.dataset.id);
+      });
+    });
   }
 
   function renderTimeline(items) {
@@ -1183,10 +1313,19 @@
         renderMuseum();
       }});
     }
-    if (r.status !== 'incensed') {
-      actions.push({ label: '🕯 上香', onClick: () => {
+    // 上香按钮始终可见（可多次上香）
+    {
+      const sticksLabel = r.incenseSticks ? `🕯 再上一柱（已 ${r.incenseSticks}）` : '🕯 上香';
+      actions.push({ label: sticksLabel, onClick: () => {
         IN.open(r, ({ sticks, at }) => {
-          updateLost(r.id, { status: 'incensed', incenseSticks: sticks, incenseAt: at });
+          const rec = findLost(r.id) || {};
+          const history2 = Array.isArray(rec.incenseHistory) ? rec.incenseHistory.slice() : [];
+          history2.push({ sticks, at });
+          updateLost(r.id, {
+            incenseSticks: (rec.incenseSticks || 0) + sticks,
+            incenseAt: at,
+            incenseHistory: history2,
+          });
           renderMuseum();
         });
       }});

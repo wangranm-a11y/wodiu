@@ -1473,6 +1473,138 @@ p, li { text-wrap: pretty; }
   border-radius: var(--r-md);
 }
 
+/* —— 墓志铭表单 —— */
+.epitaph-form {
+  display: flex; flex-direction: column;
+  gap: var(--gap-sm);
+}
+.epitaph-meta-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-sm);
+}
+.epitaph-field {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.epitaph-field span {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--ink-faint);
+  letter-spacing: 0.10em; text-transform: uppercase;
+  font-weight: 600;
+}
+.epitaph-field input {
+  background: var(--glass);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  padding: 9px 12px;
+  font-family: var(--font-prose);
+  font-size: 14px; color: var(--ink);
+  outline: none;
+  transition: border-color var(--d-fast);
+}
+.epitaph-field input:focus { border-color: var(--accent); }
+@media (max-width: 380px) {
+  .epitaph-meta-row { grid-template-columns: 1fr; }
+}
+
+/* —— 疗愈分享卡视图 —— */
+.healshare-stage {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  padding: var(--gap);
+  margin: var(--gap) 0 var(--gap-md);
+  text-align: center;
+  box-shadow: var(--el-2);
+}
+#healCanvas {
+  width: 100%; max-width: 360px; height: auto;
+  border-radius: var(--r-sm);
+  box-shadow: var(--el-2);
+}
+
+/* —— 上香榜单 —— */
+.incense-board {
+  margin-top: var(--gap-xl);
+  background: linear-gradient(180deg, rgba(245,166,35,0.08), var(--glass));
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  padding: var(--gap-md);
+}
+.incense-board[hidden] { display: none; }
+.incense-board-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: var(--gap);
+  padding-bottom: var(--gap-sm);
+  border-bottom: 1px solid var(--line);
+}
+.incense-board-title {
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+.incense-board-sub {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--ink-faint);
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.incense-board-list {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.ib-item {
+  display: flex; align-items: center; gap: var(--gap);
+  padding: 10px 8px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background var(--d-fast);
+}
+.ib-item:hover { background: var(--glass-strong); }
+.ib-rank {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  color: var(--accent);
+  width: 28px; text-align: center;
+  flex-shrink: 0;
+}
+.ib-rank.top1 { color: #ffd066; text-shadow: 0 0 12px rgba(255,208,102,0.45); }
+.ib-rank.top2 { color: #d8d2e8; }
+.ib-rank.top3 { color: #d8a576; }
+.ib-icon {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ib-icon svg { width: 100%; height: 100%; }
+.ib-body { flex: 1; min-width: 0; }
+.ib-name {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ib-meta {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+.ib-sticks {
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+  display: inline-flex; align-items: baseline; gap: 4px;
+}
+.ib-sticks-num { font-size: 18px; }
+.ib-sticks-unit {
+  font-family: var(--font-prose);
+  font-size: 11px; font-weight: 400;
+  color: var(--ink-faint);
+}
+
 /* ==========================================================
    自己
    ========================================================== */

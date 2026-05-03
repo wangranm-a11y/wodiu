@@ -56,7 +56,7 @@
   <link rel="apple-touch-icon" href="icons/icon-192.svg" />
   <link rel="preconnect" href="https://image.pollinations.ai">
   <link rel="preconnect" href="https://text.pollinations.ai">
-  <link rel="stylesheet" href="styles.css?v=20260503n" />
+  <link rel="stylesheet" href="styles.css?v=20260503o" />
 </head>
 <body>
 
@@ -355,6 +355,7 @@
           <span class="dot" data-step="3"></span>
           <span class="dot" data-step="4"></span>
           <span class="dot" data-step="5"></span>
+          <span class="dot" data-step="6"></span>
         </div>
 
         <!-- 1 上传照片 -->
@@ -385,11 +386,25 @@
           </div>
         </div>
 
-        <!-- 3 写一封信 -->
+        <!-- 3 墓志铭 -->
         <div class="heal-step" data-step="3">
-          <h2 class="heal-title">想对它说点什么？</h2>
-          <p class="heal-sub" id="letterHook">如果它能听到的话……</p>
-          <textarea id="letterText" class="letter-text" placeholder="写下来。它会收到。"></textarea>
+          <h2 class="heal-title">为它写一段墓志铭</h2>
+          <p class="heal-sub" id="letterHook">几行字就够。它会收到。</p>
+
+          <div class="epitaph-form">
+            <div class="epitaph-meta-row">
+              <label class="epitaph-field">
+                <span>丢失的时间</span>
+                <input type="datetime-local" id="lostWhenInput" />
+              </label>
+              <label class="epitaph-field">
+                <span>丢失的地点</span>
+                <input type="text" id="lostWhereInput" placeholder="比如：地铁 5 号线" maxlength="40" />
+              </label>
+            </div>
+            <textarea id="letterText" class="letter-text" placeholder="写下你想对它说的话——一句也好，几行也行。"></textarea>
+          </div>
+
           <div class="step-actions">
             <button class="btn-ghost heal-skip">跳过</button>
             <button class="btn-primary heal-next">下一步</button>
@@ -449,8 +464,24 @@
           <div class="release-line center" id="sealLine"></div>
           <div class="hero-sub center" id="noBlame"></div>
           <div class="step-actions stack">
-            <button class="btn-primary" id="sealDone">入「星图」</button>
+            <button class="btn-primary" id="sealDone">看一下纪念卡 →</button>
             <button class="btn-ghost" id="sealIncense">🕯 给它上一柱香</button>
+          </div>
+        </div>
+
+        <!-- 6 纪念卡 (heal share card) -->
+        <div class="heal-step" data-step="6">
+          <h2 class="heal-title center">纪念卡</h2>
+          <p class="heal-sub center">它的故事，留下一张能分享的卡。</p>
+          <div class="healshare-stage">
+            <canvas id="healCanvas" width="720" height="1080" aria-label="纪念卡"></canvas>
+          </div>
+          <div class="share-row">
+            <button class="btn-ghost half" id="healSave">⬇ 保存</button>
+            <button class="btn-primary half" id="healShare">分享</button>
+          </div>
+          <div class="step-actions">
+            <button class="btn-primary" id="healFinish">入「星图」</button>
           </div>
         </div>
       </div>
@@ -522,6 +553,15 @@
       </div>
 
       <div class="data-empathy" id="dataEmpathy" hidden></div>
+
+      <!-- 上香榜单 -->
+      <div class="incense-board" id="incenseBoard" hidden>
+        <div class="incense-board-head">
+          <h3 class="incense-board-title">🕯 上香榜</h3>
+          <span class="incense-board-sub">心意累计</span>
+        </div>
+        <div class="incense-board-list" id="incenseBoardList"></div>
+      </div>
     </section>
 
     <!-- ━━━━━━━━━━━━━━ 自己 Tab ━━━━━━━━━━━━━━ -->
@@ -724,15 +764,16 @@
     </div>
   </div>
 
-  <script src="copy.js?v=20260503n"></script>
-  <script src="mascot.js?v=20260503n"></script>
-  <script src="icons.js?v=20260503n"></script>
-  <script src="sounds.js?v=20260503n"></script>
-  <script src="ai.js?v=20260503n"></script>
-  <script src="findcard.js?v=20260503n"></script>
-  <script src="incense.js?v=20260503n"></script>
-  <script src="starmap.js?v=20260503n"></script>
-  <script src="app.js?v=20260503n"></script>
+  <script src="copy.js?v=20260503o"></script>
+  <script src="mascot.js?v=20260503o"></script>
+  <script src="icons.js?v=20260503o"></script>
+  <script src="sounds.js?v=20260503o"></script>
+  <script src="ai.js?v=20260503o"></script>
+  <script src="findcard.js?v=20260503o"></script>
+  <script src="healcard.js?v=20260503o"></script>
+  <script src="incense.js?v=20260503o"></script>
+  <script src="starmap.js?v=20260503o"></script>
+  <script src="app.js?v=20260503o"></script>
 
   <script>
     // PWA
