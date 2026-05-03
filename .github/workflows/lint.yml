@@ -1,0 +1,99 @@
+name: Lint & Sanity Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: 语法 + 资源路径检查
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: ✅ 检查所有 JS 文件语法
+        run: |
+          set -e
+          echo "─────────────────────────────"
+          fail=0
+          for f in *.js; do
+            if [ -f "$f" ]; then
+              if node --check "$f" 2>err.log; then
+                echo "  ✓ $f"
+              else
+                echo "  ✗ $f"
+                cat err.log
+                fail=1
+              fi
+            fi
+          done
+          rm -f err.log
+          if [ $fail -eq 1 ]; then
+            echo ""
+            echo "❌ 有 JS 文件语法错误，请修复后再 push。"
+            exit 1
+          fi
+          echo ""
+          echo "✓ 所有 JS 文件语法 OK"
+
+      - name: 🔗 检查 index.html 引用的资源是否都存在
+        run: |
+          set -e
+          echo "─────────────────────────────"
+          fail=0
+          # 抽取所有相对引用（<script src=...>, <link href=...>, manifest, icons）
+          # 去掉 query string，去掉 https:// 开头的外部链接
+          refs=$(grep -oE '(src|href)="[^"#?:]+' index.html | \
+                 cut -d'"' -f2 | \
+                 grep -v '^https:\|^http:\|^/\|^#' | \
+                 sort -u)
+          for r in $refs; do
+            if [ -f "$r" ]; then
+              echo "  ✓ $r"
+            else
+              echo "  ✗ $r 不存在"
+              fail=1
+            fi
+          done
+          if [ $fail -eq 1 ]; then
+            echo ""
+            echo "❌ 有引用的资源文件不存在，部署后会 404。"
+            exit 1
+          fi
+          echo ""
+          echo "✓ 所有引用的资源都存在"
+
+      - name: 📋 检查 manifest.json 合法
+        run: |
+          set -e
+          node -e "
+            const m = require('./manifest.json');
+            const required = ['name','short_name','start_url','display','icons'];
+            const missing = required.filter(k => !m[k]);
+            if (missing.length) {
+              console.error('❌ manifest.json 缺字段:', missing.join(', '));
+              process.exit(1);
+            }
+            // 检查 icons 路径
+            for (const icon of m.icons || []) {
+              const fs = require('fs');
+              if (!fs.existsSync(icon.src)) {
+                console.error('❌ icon 不存在:', icon.src);
+                process.exit(1);
+              }
+              console.log('  ✓', icon.src);
+            }
+            console.log('✓ manifest.json 合法');
+          "
+
+      - name: 🎯 完成
+        run: echo "全部检查通过 ✓"
