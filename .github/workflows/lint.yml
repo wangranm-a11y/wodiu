@@ -50,13 +50,15 @@ jobs:
           set -e
           echo "─────────────────────────────"
           fail=0
-          # 抽取所有相对引用（<script src=...>, <link href=...>, manifest, icons）
-          # 去掉 query string，去掉 https:// 开头的外部链接
-          refs=$(grep -oE '(src|href)="[^"#?:]+' index.html | \
+          # 抽完整 src="..." / href="..."，再过滤外部 URL / 锚点 / data URI
+          # 最后去掉 query string + 片段
+          refs=$(grep -oE '(src|href)="[^"]+"' index.html | \
                  cut -d'"' -f2 | \
-                 grep -v '^https:\|^http:\|^/\|^#' | \
+                 grep -vE '^(https?:|//|/|#|data:|mailto:)' | \
+                 sed -E 's/[?#].*$//' | \
                  sort -u)
           for r in $refs; do
+            [ -z "$r" ] && continue
             if [ -f "$r" ]; then
               echo "  ✓ $r"
             else
