@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#fbf9f4"/>
+      <stop offset="100%" stop-color="#f0ebe0"/>
+    </radialGradient>
+    <radialGradient id="ghost" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#d8d2ee"/>
+      <stop offset="100%" stop-color="#9089c2"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- soft mist halos -->
+  <circle cx="120" cy="140" r="120" fill="#b8b3d6" opacity="0.18" filter="url(#soft)"/>
+  <circle cx="400" cy="380" r="140" fill="#d9e0ec" opacity="0.30" filter="url(#soft)"/>
+
+  <!-- ghost shape -->
+  <path d="M256 90
+           C 170 90, 132 154, 132 230
+           L 132 358
+           C 132 376, 150 382, 162 370
+           L 188 344
+           C 196 336, 210 336, 218 344
+           L 244 370
+           C 252 378, 264 378, 272 370
+           L 298 344
+           C 306 336, 320 336, 328 344
+           L 354 370
+           C 366 382, 384 376, 384 358
+           L 384 230
+           C 384 154, 342 90, 256 90 Z"
+        fill="url(#ghost)" opacity="0.95"/>
+
+  <!-- eyes -->
+  <ellipse cx="218" cy="220" rx="11" ry="16" fill="#3a3a44"/>
+  <ellipse cx="296" cy="220" rx="11" ry="16" fill="#3a3a44"/>
+  <!-- mouth -->
+  <ellipse cx="256" cy="276" rx="8" ry="11" fill="#3a3a44" opacity="0.7"/>
+
+  <!-- subtle highlight -->
+  <ellipse cx="208" cy="170" rx="20" ry="14" fill="#fff" opacity="0.45"/>
+</svg>

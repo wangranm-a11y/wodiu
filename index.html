@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+  <meta name="theme-color" content="#0a0820" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="我丢" />
+  <title>我丢 · 把悬着的那件事交出去</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-192.svg" />
+  <link rel="preconnect" href="https://image.pollinations.ai">
+  <link rel="preconnect" href="https://text.pollinations.ai">
+  <link rel="stylesheet" href="styles.css?v=20260503m" />
+</head>
+<body>
+
+  <!-- ============ 顶栏（极简 brand bar） ============ -->
+  <header class="top">
+    <div class="brand-line">
+      <span class="brand-mark"></span>
+      <span class="brand-name">我丢</span>
+      <span class="brand-tag">v7</span>
+      <span class="brand-spacer"></span>
+      <span class="brand-clock" id="topClock">--:--</span>
+    </div>
+  </header>
+
+  <!-- ============ 主区 ============ -->
+  <main id="main">
+
+    <!-- ━━━━━━━━━━━━━━ 丢了 Tab ━━━━━━━━━━━━━━ -->
+    <section class="page active" id="page-lost">
+
+      <!-- ✦ 首屏 hero：丢丢主视觉 + 两个功能入口 -->
+      <div class="view active" id="lost-hero">
+        <div class="hero-stage">
+          <div class="hero-stars" aria-hidden="true"></div>
+          <div class="diu-hero" id="diuHero"></div>
+          <div class="hero-bubble" id="heroBubble" hidden></div>
+        </div>
+
+        <div class="hero-actions" id="heroActions" hidden>
+          <button class="btn-hero btn-hero-primary" id="enterLost">
+            <span class="btn-hero-emoji">·</span>
+            <span class="btn-hero-text">
+              <span class="btn-hero-title">今天丢了什么？</span>
+              <span class="btn-hero-sub">把它交给我</span>
+            </span>
+          </button>
+          <button class="btn-hero btn-hero-ghost" id="enterNote">
+            <span class="btn-hero-emoji">·</span>
+            <span class="btn-hero-text">
+              <span class="btn-hero-title">先记着，怕忘</span>
+              <span class="btn-hero-sub">还没丢，但容易忘</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 0: 输入 -->
+      <div class="view" id="lost-step0">
+        <div class="step-back">
+          <button class="back-btn" data-back="lost-hero">← 回去</button>
+        </div>
+        <div class="hero-row compact">
+          <div class="hero-text">
+            <h1 class="hero-title">今天什么<br>跑掉了？</h1>
+          </div>
+          <div class="diu-anchor" id="diu0"></div>
+        </div>
+        <div class="input-card">
+          <textarea
+            id="lostInput"
+            class="lost-input"
+            placeholder=""
+            maxlength="80"
+            rows="2"></textarea>
+          <button class="btn-voice" id="btnVoice" aria-label="语音输入">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="2" width="4" height="8" rx="2"/>
+              <path d="M3 7v1a5 5 0 0 0 10 0V7"/>
+              <line x1="8" y1="13" x2="8" y2="15"/>
+            </svg>
+          </button>
+        </div>
+        <button class="btn-primary" id="lostNext0" disabled>记下来</button>
+      </div>
+
+      <!-- Step 1: 情感定重 -->
+      <div class="view" id="lost-step1">
+        <div class="hero-text">
+          <h1 class="hero-title">这东西<br>对你来说……</h1>
+          <p class="hero-sub" id="step1Sub">没有标准答案，凭感觉就好。</p>
+        </div>
+        <div class="weight-list" id="weightList">
+          <button type="button" class="weight-card" data-weight="1">
+            <span class="weight-emoji">💚</span>
+            <span class="weight-text">
+              <span class="weight-title">没事，随口一提</span>
+              <span class="weight-desc">就是想记一笔，不至于影响今天</span>
+            </span>
+            <span class="weight-arrow" aria-hidden="true">›</span>
+          </button>
+          <button type="button" class="weight-card" data-weight="2">
+            <span class="weight-emoji">🧡</span>
+            <span class="weight-text">
+              <span class="weight-title">哎呀……有点心疼</span>
+              <span class="weight-desc">心里咯噔一下，会想几次</span>
+            </span>
+            <span class="weight-arrow" aria-hidden="true">›</span>
+          </button>
+          <button type="button" class="weight-card" data-weight="3">
+            <span class="weight-emoji">❤️</span>
+            <span class="weight-text">
+              <span class="weight-title">求求了，快回来</span>
+              <span class="weight-desc">这件不能轻飘飘地翻篇</span>
+            </span>
+            <span class="weight-arrow" aria-hidden="true">›</span>
+          </button>
+        </div>
+        <div class="step-actions">
+          <button class="btn-ghost" data-back="lost-step0">← 改一下</button>
+          <button class="btn-primary" id="lostNext1" disabled>下一步</button>
+        </div>
+      </div>
+
+      <!-- Step 2: 还想找？ -->
+      <div class="view" id="lost-step2">
+        <div class="hero-text">
+          <h1 class="hero-title">还想找吗？</h1>
+          <p class="hero-sub">不想找也是好答案。它可能更想去远方了。</p>
+        </div>
+        <div class="choice-row">
+          <button class="choice-card" data-intent="search">
+            <span class="choice-emoji">👀</span>
+            <span class="choice-title">还想找一找</span>
+            <span class="choice-sub">生成寻物卡 / 设个提醒</span>
+          </button>
+          <button class="choice-card" data-intent="release">
+            <span class="choice-emoji">🕊️</span>
+            <span class="choice-title">随缘了</span>
+            <span class="choice-sub">让它去它的命运</span>
+          </button>
+        </div>
+        <div class="step-actions">
+          <button class="btn-ghost" data-back="lost-step1">← 改一下</button>
+        </div>
+      </div>
+
+      <!-- 路径 A：轻丢翻篇 -->
+      <div class="view" id="path-light-release">
+        <div class="result-card">
+          <div class="diu-anchor center" id="diuRelease"></div>
+          <div class="release-line" id="releaseLineLight"></div>
+          <div class="hashtag">— 已交接 —</div>
+        </div>
+        <button class="btn-primary" id="lightDone">好，翻篇</button>
+      </div>
+
+      <!-- 路径 B-fork：记得位置吗？(PRD v6 寻物路径重构) -->
+      <div class="view" id="path-search-fork">
+        <div class="hero-text">
+          <h1 class="hero-title">你大概知道<br>它在哪里吗？</h1>
+          <p class="hero-sub">告诉我你知道多少。线索越多，找回来的可能越大。</p>
+        </div>
+        <div class="choice-row stacked">
+          <button class="choice-card wide" data-fork="known">
+            <span class="choice-emoji">📍</span>
+            <span class="choice-title">记得，能说个大概位置</span>
+            <span class="choice-sub">→ 生成寻物卡</span>
+          </button>
+          <button class="choice-card wide" data-fork="unknown">
+            <span class="choice-emoji">🤷</span>
+            <span class="choice-title">不太记得，就先记下来</span>
+            <span class="choice-sub">→ 仅设提醒</span>
+          </button>
+        </div>
+        <div class="step-actions">
+          <button class="btn-ghost" data-back="lost-step2">← 改一下</button>
+        </div>
+      </div>
+
+      <!-- 路径 B：寻物卡（记得位置） -->
+      <div class="view" id="path-search">
+        <div class="search-phase active" id="searchPhaseForm">
+          <div class="hero-text">
+            <h2 class="view-title">寻物线索</h2>
+            <p class="view-sub">写两句线索，我帮你画一张寻物卡。</p>
+          </div>
+
+          <!-- 可选：上传照片（放在最显眼的位置，进表单第一眼就能看到） -->
+          <div class="photo-upload-block">
+            <label class="photo-upload" id="photoUpload">
+              <input type="file" id="inPhoto" accept="image/*" hidden />
+              <div class="photo-upload-empty" id="photoUploadEmpty">
+                <span class="photo-upload-icon">＋</span>
+                <span class="photo-upload-title">加一张照片</span>
+                <span class="photo-upload-sub">有照片更容易找回来 · 可选</span>
+              </div>
+              <div class="photo-upload-preview" id="photoUploadPreview" hidden>
+                <img id="photoPreviewImg" alt="preview" />
+                <button type="button" class="photo-remove" id="photoRemove" aria-label="移除">×</button>
+              </div>
+            </label>
+          </div>
+
+          <div class="form-grid">
+            <label>丢的是什么
+              <input id="inName" type="text" readonly />
+            </label>
+            <label>什么时候丢的
+              <select id="inWhen">
+                <option value="just">刚刚</option>
+                <option value="today" selected>今天</option>
+                <option value="recent">这两天</option>
+                <option value="unknown">说不清楚</option>
+              </select>
+            </label>
+            <label>最后出现的地方
+              <input id="inPlace" type="text" placeholder="图书馆三层 / 7号教室桌肚…" />
+            </label>
+            <label>多说一句（颜色、特征）
+              <input id="inDesc" type="text" placeholder="蓝色封皮，里面夹着便签" />
+            </label>
+            <label>联系方式（可选，建议填微信号）
+              <input id="inContact" type="text" placeholder="留空也可以" />
+            </label>
+          </div>
+
+          <div class="step-actions">
+            <button class="btn-ghost" data-back="path-search-fork">← 改一下</button>
+            <button class="btn-primary" id="genFindCard">生成寻物卡</button>
+          </div>
+        </div>
+
+        <div class="search-phase" id="searchPhaseCard" hidden>
+          <div class="hero-text">
+            <h2 class="view-title">寻物卡</h2>
+            <p class="view-sub">画好了。保存或者分享给可能看见它的人。</p>
+          </div>
+
+          <div class="canvas-wrap">
+            <canvas id="findCanvas" width="720" height="1080" aria-label="寻物卡"></canvas>
+          </div>
+
+          <div class="share-row">
+            <button class="btn-ghost half" id="cardSave">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 9v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V9"/>
+                <polyline points="4 6 7 9 10 6"/>
+                <line x1="7" y1="9" x2="7" y2="2"/>
+              </svg>
+              保存
+            </button>
+            <button class="btn-primary half" id="cardShare">分享</button>
+          </div>
+
+          <div class="step-actions">
+            <button class="btn-ghost" id="cardEdit">← 改信息</button>
+            <button class="btn-ghost" id="searchToRelease">让它走</button>
+            <button class="btn-primary" id="searchSave">存到「还在」</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 路径 B-unknown：极轻量·只设提醒 -->
+      <div class="view" id="path-search-light">
+        <div class="hero-text">
+          <h2 class="view-title">放在「还在」里<br>慢慢等</h2>
+          <p class="view-sub">不需要填任何信息。我帮你盯着，<br>你想起来的时候再来。</p>
+        </div>
+        <div class="form-grid">
+          <label>要设个提醒吗？
+            <select id="inReminder">
+              <option value="">不提醒</option>
+              <option value="1h">1 小时后</option>
+              <option value="evening" selected>今天稍晚</option>
+              <option value="tomorrow">明天</option>
+              <option value="custom">自定义时间…</option>
+            </select>
+          </label>
+          <label id="customReminderRow" hidden>选个时间
+            <input id="inReminderCustom" type="datetime-local" />
+          </label>
+        </div>
+        <div class="step-actions">
+          <button class="btn-ghost" data-back="path-search-fork">← 改一下</button>
+          <button class="btn-primary" id="searchLightSave">放进「还在」</button>
+        </div>
+      </div>
+
+      <!-- 路径 C：重丢过渡 -->
+      <div class="view" id="path-heavy-bridge">
+        <div class="result-card soft">
+          <div class="diu-anchor center" id="diuHeavy"></div>
+          <div class="release-line" id="bridgeLine"></div>
+        </div>
+        <div class="step-actions stack">
+          <button class="btn-primary" id="heavyEnter">陪它走一段</button>
+          <button class="btn-ghost" id="heavySkip">先记下来，下次再说</button>
+        </div>
+      </div>
+
+      <!-- 路径 D：疗愈流程 -->
+      <div class="view" id="heal-flow">
+        <div class="heal-progress">
+          <span class="dot" data-step="1"></span>
+          <span class="dot" data-step="2"></span>
+          <span class="dot" data-step="3"></span>
+          <span class="dot" data-step="4"></span>
+          <span class="dot" data-step="5"></span>
+        </div>
+
+        <!-- 1 上传照片 -->
+        <div class="heal-step active" data-step="1">
+          <h2 class="heal-title">有它的照片吗？</h2>
+          <p class="heal-sub">没有也没关系，你记得就够了。</p>
+          <label class="upload-box">
+            <span id="uploadHint">点这里上传一张照片（可选）</span>
+            <img id="uploadPreview" hidden alt="" />
+            <input type="file" id="healPhoto" accept="image/*" hidden />
+          </label>
+          <div class="step-actions">
+            <button class="btn-ghost heal-skip">跳过</button>
+            <button class="btn-primary heal-next">下一步</button>
+          </div>
+        </div>
+
+        <!-- 2 影子 -->
+        <div class="heal-step" data-step="2">
+          <h2 class="heal-title">这是它留下的影子</h2>
+          <p class="heal-sub">看一会儿，再继续也行。</p>
+          <div class="shadow-card">
+            <div class="shadow-poem" id="shadowPoem"></div>
+          </div>
+          <div class="step-actions">
+            <button class="btn-ghost heal-skip">跳过</button>
+            <button class="btn-primary heal-next">下一步</button>
+          </div>
+        </div>
+
+        <!-- 3 写一封信 -->
+        <div class="heal-step" data-step="3">
+          <h2 class="heal-title">想对它说点什么？</h2>
+          <p class="heal-sub" id="letterHook">如果它能听到的话……</p>
+          <textarea id="letterText" class="letter-text" placeholder="写下来。它会收到。"></textarea>
+          <div class="step-actions">
+            <button class="btn-ghost heal-skip">跳过</button>
+            <button class="btn-primary heal-next">下一步</button>
+          </div>
+        </div>
+
+        <!-- 4 它的下一段旅程 -->
+        <div class="heal-step" data-step="4">
+          <h2 class="heal-title">它的下一段旅程</h2>
+          <p class="heal-sub">它离开你之后，会去哪里？挑几个词，我帮你写一段它的漂流记。</p>
+
+          <div class="kw-input-wrap">
+            <input id="kwInput" class="kw-input" placeholder="自己写一个关键词" maxlength="14" />
+            <button class="btn-ghost small" id="kwAdd">加</button>
+          </div>
+          <div class="kw-chips" id="kwChips"></div>
+
+          <div class="kw-suggest">
+            <div class="kw-suggest-title">没灵感？戳几个</div>
+            <div class="kw-suggest-list" id="kwSuggest"></div>
+          </div>
+
+          <button class="btn-primary" id="storyGen" disabled>编一段</button>
+
+          <div class="story-loading" id="storyLoading" hidden>
+            <div class="loading-dots"><span></span><span></span><span></span></div>
+            <div>丢丢正在编……</div>
+          </div>
+
+          <div class="story-result" id="storyResult" hidden>
+            <div class="story-illustration">
+              <img id="storyImg" alt="" />
+              <div class="story-img-overlay" id="storyImgFallback" hidden>插画生成中…</div>
+            </div>
+            <div class="story-text" id="storyText"></div>
+            <label class="story-tail">
+              你想对它说一句什么
+              <input id="storyTail" type="text" placeholder="一句就够了" maxlength="60" />
+            </label>
+            <button class="btn-ghost small" id="storyRegen">重新编一段</button>
+          </div>
+
+          <div class="step-actions">
+            <button class="btn-ghost heal-skip">跳过</button>
+            <button class="btn-primary heal-next">下一步</button>
+          </div>
+        </div>
+
+        <!-- 5 封存 -->
+        <div class="heal-step" data-step="5">
+          <h2 class="heal-title center">封存</h2>
+          <p class="heal-sub center">它要安家了。</p>
+          <div class="seal-anim">
+            <div class="seal-particles"></div>
+            <div class="diu-anchor center" id="diuSeal"></div>
+          </div>
+          <div class="release-line center" id="sealLine"></div>
+          <div class="hero-sub center" id="noBlame"></div>
+          <div class="step-actions stack">
+            <button class="btn-primary" id="sealDone">入「星图」</button>
+            <button class="btn-ghost" id="sealIncense">🕯 给它上一柱香</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━ 还在 Tab（PRD v6 新增） ━━━━━━━━━━━━━━ -->
+    <section class="page" id="page-stillhere">
+      <div class="page-head">
+        <h1 class="page-title">还在</h1>
+        <p class="page-sub">还没结果的事。它们都在我这儿。</p>
+      </div>
+
+      <!-- 顶部分类切换 -->
+      <div class="filter-row">
+        <button class="chip active" data-stillhere-filter="all">全部</button>
+        <button class="chip" data-stillhere-filter="note">🗒 先记着</button>
+        <button class="chip" data-stillhere-filter="searching">🔍 寻找中</button>
+      </div>
+
+      <!-- 快速记录卡 -->
+      <div class="note-input">
+        <textarea id="noteInput" placeholder="比如：法语书在宿舍窗台上 / 雨伞在玄关挂钩" rows="2"></textarea>
+        <div class="note-remind">
+          <span>提醒一下？</span>
+          <select id="noteWhen">
+            <option value="">不提醒</option>
+            <option value="2h">2 小时后</option>
+            <option value="tonight">今晚</option>
+            <option value="tomorrow">明天早上</option>
+          </select>
+          <button class="btn-primary small" id="noteAdd">先记着</button>
+        </div>
+      </div>
+
+      <div class="stillhere-list" id="stillhereList"></div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━ 星图 Tab ━━━━━━━━━━━━━━ -->
+    <section class="page" id="page-museum">
+      <div class="page-head">
+        <h1 class="page-title">星图</h1>
+        <p class="page-sub" id="museumQuote">这些都是你有过的东西，它们都好好的。</p>
+      </div>
+
+      <!-- 视图切换（星空 / 时间轴） -->
+      <div class="view-switch">
+        <button class="view-btn active" data-view="starfield">✦ 星空</button>
+        <button class="view-btn" data-view="timeline">≡ 时间轴</button>
+      </div>
+
+      <!-- 状态筛选 -->
+      <div class="filter-row">
+        <button class="chip active" data-filter="all">全部</button>
+        <button class="chip" data-filter="found">找到</button>
+        <button class="chip" data-filter="released">翻篇</button>
+        <button class="chip" data-filter="healed">封存</button>
+        <button class="chip" data-filter="incensed">已上香</button>
+      </div>
+
+      <!-- 星空视图 -->
+      <div class="starmap-frame" id="starmapFrame">
+        <div class="starmap-bg"></div>
+        <div class="diu-floater" id="diuStarmap"></div>
+      </div>
+
+      <!-- 时间轴视图 -->
+      <div class="timeline-frame" id="timelineFrame" hidden>
+        <div class="timeline-list" id="timelineList"></div>
+      </div>
+
+      <div class="data-empathy" id="dataEmpathy" hidden></div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━ 自己 Tab ━━━━━━━━━━━━━━ -->
+    <section class="page" id="page-me">
+      <div class="page-head">
+        <h1 class="page-title">自己</h1>
+        <p class="page-sub">这是你的小角落。</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-num" id="statTotal">0</span>
+          <span class="stat-label">在档</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" id="statFound">0%</span>
+          <span class="stat-label">找回率</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" id="statTop">—</span>
+          <span class="stat-label">惯犯</span>
+        </div>
+      </div>
+
+      <div class="me-card">
+        <div class="me-card-title">这个月</div>
+        <div class="me-card-body" id="blameIndex">还没数据，过几天再来。</div>
+      </div>
+
+      <div class="me-card">
+        <div class="me-card-title">通知</div>
+        <div class="me-row">
+          <span>开启浏览器通知</span>
+          <button class="btn-ghost small" id="permBtn">请求权限</button>
+        </div>
+        <div class="me-row">
+          <span>测试通知</span>
+          <button class="btn-ghost small" id="testNotify">来一条</button>
+        </div>
+      </div>
+
+      <div class="me-card">
+        <div class="me-card-title">声音 & 体感</div>
+
+        <div class="me-row">
+          <span>背景音乐</span>
+          <button class="toggle on" id="toggleMusic" data-on="true"><span class="toggle-knob"></span></button>
+        </div>
+
+        <!-- 音乐主题 3 选 1 -->
+        <div class="music-themes" id="musicThemes">
+          <button class="theme-btn active" data-theme="warm">
+            <span class="theme-emoji">☀</span>
+            <span class="theme-name">温暖</span>
+            <span class="theme-desc">F 大调日光</span>
+          </button>
+          <button class="theme-btn" data-theme="moon">
+            <span class="theme-emoji">☾</span>
+            <span class="theme-name">月光</span>
+            <span class="theme-desc">D 多利亚夜</span>
+          </button>
+          <button class="theme-btn" data-theme="sea">
+            <span class="theme-emoji">≋</span>
+            <span class="theme-name">海风</span>
+            <span class="theme-desc">A 五声 + 浪</span>
+          </button>
+        </div>
+
+        <!-- 音量滑块 -->
+        <div class="me-row music-volume-row">
+          <span class="vol-label">音量 <span class="vol-num" id="volNum">60</span></span>
+          <input type="range" min="0" max="100" value="60" id="musicVolume" class="vol-slider" />
+        </div>
+
+        <div class="me-row">
+          <span>音效</span>
+          <button class="toggle on" id="toggleSound" data-on="true"><span class="toggle-knob"></span></button>
+        </div>
+        <div class="me-row">
+          <span>震动</span>
+          <button class="toggle on" id="toggleHaptic" data-on="true"><span class="toggle-knob"></span></button>
+        </div>
+        <div class="me-row">
+          <span>试一下铜钵</span>
+          <button class="btn-ghost small" id="trySound">叮——</button>
+        </div>
+      </div>
+
+      <div class="me-card">
+        <div class="me-card-title">数据</div>
+        <div class="me-row">
+          <span>导出 JSON</span>
+          <button class="btn-ghost small" id="exportBtn">下载</button>
+        </div>
+        <div class="me-row danger">
+          <span>清空所有</span>
+          <button class="btn-ghost small danger" id="wipeBtn">清空</button>
+        </div>
+      </div>
+
+      <button type="button" class="about-link" id="aboutLink">
+        <span>关于我丢 · 这一切是怎么开始的</span>
+      </button>
+
+      <div class="me-foot">需要的时候它在<br><span class="me-version">v7 · 暗夜柔糖 · 重生</span></div>
+    </section>
+  </main>
+
+  <!-- ============ 底部 4-Tab Nav ============ -->
+  <nav class="tabbar">
+    <button class="tab active" data-tab="lost">
+      <span class="tab-icon">✦</span>
+      <span class="tab-label">丢了</span>
+    </button>
+    <button class="tab" data-tab="stillhere">
+      <span class="tab-icon">◐</span>
+      <span class="tab-label">还在</span>
+    </button>
+    <button class="tab" data-tab="museum">
+      <span class="tab-icon">✧</span>
+      <span class="tab-label">星图</span>
+    </button>
+    <button class="tab" data-tab="me">
+      <span class="tab-icon">◯</span>
+      <span class="tab-label">自己</span>
+    </button>
+  </nav>
+
+  <!-- ============ Toast / Modal ============ -->
+  <div class="toast" id="toast"></div>
+  <div class="modal" id="modal" hidden>
+    <div class="modal-mask" data-close></div>
+    <div class="modal-card" id="modalCard"></div>
+  </div>
+
+  <!-- ============ 关于我丢（全屏覆盖层） ============ -->
+  <div class="about-overlay" id="aboutOverlay">
+    <button class="about-close" id="aboutClose" aria-label="关闭">×</button>
+    <div class="about-content" id="aboutContent"></div>
+    <div class="about-diu" id="aboutDiu"></div>
+  </div>
+
+  <!-- ============ 赛博上香（全屏覆盖层） ============ -->
+  <div class="incense-overlay" id="incenseOverlay" hidden>
+    <div class="incense-mask"></div>
+    <button class="incense-close" id="incenseClose" aria-label="关闭">×</button>
+    <div class="incense-stage">
+
+      <div class="incense-step" data-incense-step="pick">
+        <div class="incense-head">
+          <div class="diu-anchor center" id="diuIncense1"></div>
+          <h2 class="incense-title">为「<span id="incenseItem">它</span>」点几柱香</h2>
+          <p class="incense-sub" id="incensePromptLine"></p>
+        </div>
+        <div class="stick-row">
+          <button class="stick-card" data-sticks="1">
+            <span class="stick-emoji">|</span>
+            <span class="stick-num">1 柱</span>
+            <span class="stick-label">心意到</span>
+          </button>
+          <button class="stick-card" data-sticks="3">
+            <span class="stick-emoji">|||</span>
+            <span class="stick-num">3 柱</span>
+            <span class="stick-label">三敬</span>
+          </button>
+          <button class="stick-card" data-sticks="5">
+            <span class="stick-emoji">|||||</span>
+            <span class="stick-num">5 柱</span>
+            <span class="stick-label">仪式拉满</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="incense-step" data-incense-step="light" hidden>
+        <div class="altar">
+          <div class="sticks" id="sticksRow"></div>
+          <div class="altar-bowl"></div>
+          <div class="altar-base">— 香 炉 —</div>
+        </div>
+        <p class="incense-sub center" id="lightHint">长按 3 秒 · 点火上香</p>
+        <button class="light-btn" id="lightBtn">
+          <span class="light-btn-ring"></span>
+          <span class="light-btn-fire">🔥</span>
+          <span class="light-btn-text">长按</span>
+        </button>
+      </div>
+
+      <div class="incense-step" data-incense-step="bless" hidden>
+        <div class="altar">
+          <div class="smoke-row" id="smokeRow"></div>
+          <div class="sticks" id="sticksRowLit"></div>
+          <div class="altar-bowl"></div>
+          <div class="altar-base">— 香 炉 —</div>
+        </div>
+        <div class="bless-text" id="blessText"></div>
+        <div class="bless-meta" id="blessMeta"></div>
+        <button class="btn-primary" id="blessDone">礼成</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="copy.js?v=20260503m"></script>
+  <script src="mascot.js?v=20260503m"></script>
+  <script src="icons.js?v=20260503m"></script>
+  <script src="sounds.js?v=20260503m"></script>
+  <script src="ai.js?v=20260503m"></script>
+  <script src="findcard.js?v=20260503m"></script>
+  <script src="incense.js?v=20260503m"></script>
+  <script src="starmap.js?v=20260503m"></script>
+  <script src="app.js?v=20260503m"></script>
+
+  <script>
+    // PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(()=>{});
+      });
+    }
+  </script>
+</body>
+</html>
