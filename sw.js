@@ -1,5 +1,5 @@
 /* 「我丢」 service worker —— 简单缓存，离线可用 */
-const CACHE = 'wodiu-v16';
+const CACHE = 'wodiu-v17';
 const ASSETS = [
   './',
   './index.html',

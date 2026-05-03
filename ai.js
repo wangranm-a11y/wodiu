@@ -36,11 +36,18 @@ window.AI = (function () {
 
   function localTemplateStory(name, kws) {
     const C = window.COPY;
-    const a = kws[0] || '某个时候';
-    const b = kws[1] || '某种感觉';
-    const c = kws[2] || '某个地方';
+    const safe = (kws || []).filter(Boolean);
+    const a = safe[0] || '远方';
+    const b = safe[1] || '春天';
+    const c = safe[2] || '另一个地方';
+    const itemName = (name || '它').replace(/[「」]/g, '');
     const tpl = C.pick(C.storyTemplates);
-    return tpl.replace('{a}', a).replace('{b}', b).replace('{c}', c);
+    // 全局替换：{name} {a} {b} {c} 都要换
+    return tpl
+      .replace(/\{name\}/g, itemName)
+      .replace(/\{a\}/g, a)
+      .replace(/\{b\}/g, b)
+      .replace(/\{c\}/g, c);
   }
 
   // —— 配图 —— 用 turbo 模型 + 小尺寸，更可能在超时前返回

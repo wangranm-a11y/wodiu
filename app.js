@@ -443,12 +443,38 @@
     card.classList.add('float-away');
     SND?.play('whoosh');
     HAP?.success();
-    setTimeout(() => {
+    setTimeout(async () => {
       card.classList.remove('float-away');
-      toast(C.pick(C.noBlame), 3000);
-      switchTab('museum');
+      // 给所有翻篇的物件一个上香机会（PRD 3.2）
+      await offerIncenseOrSkip();
     }, 800);
   });
+
+  // —— 通用：在任何"翻篇"之后浮一个"要不要给它上柱香"的轻提示 ——
+  async function offerIncenseOrSkip() {
+    const item = lostState.currentId ? findLost(lostState.currentId) : null;
+    const itemName = item?.name || lostState.name || '它';
+    const yes = await modal(
+      `<h3>要给「${escapeHTML(itemName)}」上一柱香吗？</h3>
+       <p>30 秒的小仪式，给它一个温柔的告别。<br>不上也没关系。</p>`,
+      [
+        { label: '不了，去星图' },
+        { label: '🕯 给它上一柱', primary: true },
+      ]
+    );
+    if (yes === 1 && item) {
+      IN.open(item, ({ sticks, at }) => {
+        updateLost(item.id, { status: 'incensed', incenseSticks: sticks, incenseAt: at });
+        switchTab('museum');
+      });
+    } else if (yes === 1 && !item) {
+      // 没有 record（极少见），随便造一个临时对象
+      IN.open({ name: itemName }, () => switchTab('museum'));
+    } else {
+      toast(C.pick(C.noBlame), 3000);
+      switchTab('museum');
+    }
+  }
 
   // ============ 寻物卡 ============
   function enterSearchView() {
@@ -596,11 +622,10 @@
       `<h3>不想等了？</h3><p style="color:var(--ink-soft);font-size:14px;line-height:1.6">那我把它放进博物馆，按"翻篇"处理。也可以选择陪它走一段（疗愈）。</p>`,
       [
         { label: '取消' },
-        { label: '直接翻篇', onClick: () => {
+        { label: '直接翻篇', onClick: async () => {
           if (lostState.currentId) updateLost(lostState.currentId, { status: 'released' });
           SND?.play('whoosh'); HAP?.success();
-          toast(C.pick(C.noBlame), 3000);
-          setTimeout(() => switchTab('museum'), 800);
+          await offerIncenseOrSkip();
         }},
         { label: '陪它走一段', primary: true, onClick: () => {
           $('#bridgeLine').textContent = C.pick(C.heavyBridge);
@@ -612,12 +637,11 @@
   });
 
   // ============ 重丢过渡 ============
-  $('#heavySkip').addEventListener('click', () => {
+  $('#heavySkip').addEventListener('click', async () => {
     HAP?.light();
     if (!lostState.currentId) lostState.currentId = createLostRecord('released');
     else updateLost(lostState.currentId, { status: 'released' });
-    toast('记下了。想回头再来都行。', 2500);
-    setTimeout(() => switchTab('museum'), 800);
+    await offerIncenseOrSkip();
   });
 
   $('#heavyEnter').addEventListener('click', () => {
